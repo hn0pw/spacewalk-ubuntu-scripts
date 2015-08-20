@@ -1,0 +1,12 @@
+--- /usr/lib/python2.7/xmlrpclib.py	2015-06-22 20:49:29.000000000 +0200
++++ /root/xmlrpclib.py	2015-08-19 12:43:08.450509235 +0200
+@@ -655,8 +655,8 @@
+         f(self, value, write)
+
+     def dump_nil (self, value, write):
+-        if not self.allow_none:
+-            raise TypeError, "cannot marshal None unless allow_none is enabled"
++        # if not self.allow_none:
++            # raise TypeError, "cannot marshal None unless allow_none is enabled"
+         write("<value><nil/></value>")
+     dispatch[NoneType] = dump_nil
