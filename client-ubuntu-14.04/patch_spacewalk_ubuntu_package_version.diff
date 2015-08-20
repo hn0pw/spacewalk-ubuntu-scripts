@@ -1,23 +1,11 @@
---- /usr/share/rhn/up2date_client/debUtils.py	2012-06-16 13:42:54.000000000 -0400
-+++ /root/debUtils.py	2015-08-20 05:49:17.223253000 -0400
-@@ -25,13 +25,13 @@
- 
- def parseVRE(version):
-     epoch = ''
--    release = '0'
--    if version.find(':') != -1:
--        epoch, version = version.split(':')
--    if version.find('-') != -1: 
--        tmp = version.split('-')
--        version = '-'.join(tmp[:-1])
--        release = tmp[-1]
-+    version_tmpArr = version.split('-')
-+        if len(version_tmpArr) == 1:
-+            version = version
-+            release = "X"
-+        else:
-+            version = version_tmpArr[0]
-+            release = version_tmpArr[1]
+--- /usr/share/rhn/up2date_client/debUtils.py	2015-08-20 12:06:20.822509235 +0200
++++ /root/debUtils.py	2015-08-20 12:07:48.582509235 +0200
+@@ -29,7 +29,7 @@
+     if len(version_tmpArr) == 1:
+         version = version
+         release = "X"
+-     else:
++    else:
+         version = version_tmpArr[0]
+         release = version_tmpArr[1]
      return version, release, epoch
- 
- def installTime(pkg_name):
