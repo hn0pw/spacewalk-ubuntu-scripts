@@ -19,6 +19,17 @@ apt-get -y install apt-transport-spacewalk rhnsd python-libxml2
 # Default is 240 minutes, the minimum is  60  minutes.
 sed -i 's/INTERVAL=240/INTERVAL=60/g' /etc/rhn/rhnsd
 
+# Disable daily mails from each server, the default is upgrade
+# Value: error   (send mail on error runs)
+#        upgrade (when packages is upgraded)
+#        changes (mail when change in output from an action)
+#        output  (send mail when output is generated)
+#        always  (always send mail)
+#                (else never send mail)
+if [ -f "/etc/cron-apt/config" ]; then
+    sed -i 's/MAILON="upgrade"/MAILON="error"/g' /etc/cron-apt/config
+fi
+
 # Fix errors emails from spacewalk
 # https://github.com/ahakala/deb-spacewalk
 FILE="/etc/apt/apt.conf"
