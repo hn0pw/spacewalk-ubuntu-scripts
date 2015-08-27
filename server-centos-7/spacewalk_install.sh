@@ -26,6 +26,9 @@ echo "Installing packages"
 yum -y install spacewalk-setup-postgresql python-debian screen vnstat git
 #yum update python-debian
 
+echo "Patch files"
+./patch_files.sh
+
 echo "Open firewall ports"
 firewall-cmd --add-service=http ; firewall-cmd --add-service=https; firewall-cmd --add-service=smtp; firewall-cmd --runtime-to-permanent; firewall-cmd --reload
 #firewall-cmd --permanent --list-all
@@ -42,7 +45,6 @@ cpan -i WWW/Mechanize.pm
 
 HOSTNAME=$(hostname -f)
 wget http://$HOSTNAME/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
-
 
 DEBIANSYNCFILE="/root/spacewalk-debian-sync.pl"
 wget https://raw.githubusercontent.com/stevemeier/spacewalk-debian-sync/master/spacewalk-debian-sync.pl -O $DEBIANSYNCFILE
@@ -61,6 +63,8 @@ echo "45 0 * * * $DEBIANSYNCFILE --username $spacewalk_username --password '$spa
 echo "0 1 * * * $DEBIANSYNCFILE --username $spacewalk_username --password '$spacewalk_password' --channel 'trusty-updates-universe' --url 'http://de.archive.ubuntu.com/ubuntu/dists/trusty-updates/universe/binary-amd64/'" >> $CRONFILE
 echo "15 1 * * * $DEBIANSYNCFILE --username $spacewalk_username --password '$spacewalk_password' --channel 'trusty-security-universe' --url 'http://de.archive.ubuntu.com/ubuntu/dists/trusty-security/universe/binary-amd64/'" >> $CRONFILE
 
+echo "Restart spacewalk"
+spacewalk-service restart
 
 echo "************************************************************************************"
 echo "Finished, please open https://"$(hostname -f)" in your browser"
