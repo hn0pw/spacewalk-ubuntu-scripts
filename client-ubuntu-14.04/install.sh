@@ -1,4 +1,15 @@
 #!/bin/bash
+
+if [ $# -eq 2 ]
+then
+    apt-get -y install git
+    git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git"
+    cd spacewalk-ubuntu-scripts/client-ubuntu-14.04
+    echo "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$3"\"\n" > config
+    ./install.sh
+    exit
+fi
+
 echo "Installing spacewalk client for Ubuntu 14.04LTS"
 
 CONFIGFILE="config"

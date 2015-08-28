@@ -86,6 +86,8 @@ echo "The packages import needs several hours, if you want to start right now do
 echo "Run each command from "$CRONFILE" in screen session (will not die if the connection broke)"
 echo ""
 echo "To install the client on Ubuntu please run this lines as root on each server:"
+echo "  wget -N https://raw.githubusercontent.com/ramon-ga/spacewalk-ubuntu-scripts/master/client-ubuntu-14.04/install.sh&&bash install.sh '"$HOSTNAME"' '1-paste-key-from-webinterface'"
+
 echo "  git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git"
 echo "  cd spacewalk-ubuntu-scripts/client-ubuntu-14.04"
 echo "  echo "SPACEWALK_HOST=\""$HOSTNAME"\"\nSPACEWALK_ACTIVATION_KEY=\"1-paste-key-from-webinterface\"\n" > config
