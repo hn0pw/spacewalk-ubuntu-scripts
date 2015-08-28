@@ -8,6 +8,7 @@ then
     cd spacewalk-ubuntu-scripts/client-ubuntu-14.04
     echo -e "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$2"\"\n" > config
     ./install.sh
+    cd ../../ && rm -rf spacewalk-ubuntu-scripts
     exit
 fi
 
