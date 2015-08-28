@@ -3,10 +3,10 @@
 if [ $# -eq 2 ]
 then
     rm -f install.sh
-    apt-get -y install git
+    apt-get -qq -y install git
     git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git
     cd spacewalk-ubuntu-scripts/client-ubuntu-14.04
-    echo "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$2"\"\n" > config
+    echo -e "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$2"\"\n" > config
     ./install.sh
     exit
 fi
@@ -24,8 +24,10 @@ source config
 echo "Your spacewalk host: "$SPACEWALK_HOST
 echo "Your activation key: "$SPACEWALK_ACTIVATION_KEY
 
-apt-get update
-apt-get -y install apt-transport-spacewalk rhnsd python-libxml2
+echo "Update package list.."
+apt-get -qq update
+echo "Install packages.."
+apt-get -qq -y install apt-transport-spacewalk rhnsd python-libxml2
 
 # Specify the interval that rhnsd should wait between checking the Red Hat Network.
 # Default is 240 minutes, the minimum is  60  minutes.
