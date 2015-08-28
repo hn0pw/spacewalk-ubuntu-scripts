@@ -30,6 +30,11 @@ if [ -f "/etc/cron-apt/config" ]; then
     sed -i 's/MAILON="upgrade"/MAILON="error"/g' /etc/cron-apt/config
 fi
 
+# disable daily APT::Periodic::Update-Package-Lists "1";
+if [ -f "/etc/apt/apt.conf.d/10periodic" ]; then
+    sed -i 's/APT::Periodic::Update-Package-Lists "1";/APT::Periodic::Update-Package-Lists "0";/g' /etc/apt/apt.conf.d/10periodic
+fi
+
 # Fix errors emails from spacewalk
 # https://github.com/ahakala/deb-spacewalk
 FILE="/etc/apt/apt.conf"
