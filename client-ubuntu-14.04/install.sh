@@ -4,7 +4,8 @@ if [ $# -eq 2 ]
 then
     rm -f install.sh
     apt-get -qq -y install git
-    git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git
+    echo "Get the install files"
+    git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git --quiet
     cd spacewalk-ubuntu-scripts/client-ubuntu-14.04
     echo -e "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$2"\"\n" > config
     ./install.sh
@@ -69,13 +70,15 @@ bash patch_files.sh
 
 echo "Register this client with your spacewalk host"
 echo "rhnreg_ks --serverUrl=https://"$SPACEWALK_HOST"/XMLRPC --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey="$SPACEWALK_ACTIVATION_KEY
-wget http://$SPACEWALK_HOST/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
+wget --quiet http://$SPACEWALK_HOST/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 rhnreg_ks --serverUrl=https://$SPACEWALK_HOST/XMLRPC --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey=$SPACEWALK_ACTIVATION_KEY
 
 /etc/init.d/rhnsd restart
 
 echo "Finished"
 echo "Please go to your spacewalk web interface to see this client status"
+echo "    https://"$SPACEWALK_HOST
+echo ""
 
 
 
