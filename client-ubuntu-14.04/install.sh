@@ -3,8 +3,8 @@
 if [ $# -eq 2 ]
 then
     rm -f install.sh
-    apt-get -qq -y install git
     echo "Get the install files"
+    apt-get -qq -y install git
     git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git --quiet
     cd spacewalk-ubuntu-scripts/client-ubuntu-14.04
     echo -e "SPACEWALK_HOST=\""$1"\"\nSPACEWALK_ACTIVATION_KEY=\""$2"\"\n" > config
