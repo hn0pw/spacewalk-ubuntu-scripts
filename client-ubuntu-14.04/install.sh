@@ -71,7 +71,7 @@ bash patch_files.sh
 echo "Register this client with your spacewalk host"
 echo "rhnreg_ks --serverUrl=https://"$SPACEWALK_HOST"/XMLRPC --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey="$SPACEWALK_ACTIVATION_KEY
 wget --quiet http://$SPACEWALK_HOST/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
-rhnreg_ks --serverUrl=https://$SPACEWALK_HOST/XMLRPC --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey=$SPACEWALK_ACTIVATION_KEY
+rhnreg_ks --serverUrl=https://$SPACEWALK_HOST/XMLRPC --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey=$SPACEWALK_ACTIVATION_KEY --force
 
 /etc/init.d/rhnsd restart
 
