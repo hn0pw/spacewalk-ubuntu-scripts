@@ -91,9 +91,7 @@ echo "Run each command from "$CRONFILE" in screen session (will not die if the c
 echo ""
 echo "To install the client on Ubuntu please run this lines as root on each server:"
 echo "  wget --quiet -N https://raw.githubusercontent.com/ramon-ga/spacewalk-ubuntu-scripts/master/client-ubuntu-14.04/install.sh&&bash install.sh '"$HOSTNAME"' '1-paste-key-from-webinterface'"
-
-echo "  git clone https://github.com/ramon-ga/spacewalk-ubuntu-scripts.git"
-echo "  cd spacewalk-ubuntu-scripts/client-ubuntu-14.04"
-echo "  echo "SPACEWALK_HOST=\""$HOSTNAME"\"\nSPACEWALK_ACTIVATION_KEY=\"1-paste-key-from-webinterface\"\n" > config
-echo "  ./install.sh
+echo ""
+echo "To add custom repo's add it to the cron file "$CRONFILE
+echo "Ex. for percona: 30 1 * * * root /root/spacewalk-debian-sync.pl --username user --password 'password' --channel 'trusty-percona-main' --url '/root/spacewalk-debian-sync.pl --username Administrator --password '9yupdz2YPinIRo8V' --channel 'trusty-percona-main' --url 'http://repo.percona.com/apt/dists/trusty/main/binary-amd64/'"
 echo "************************************************************************************"
