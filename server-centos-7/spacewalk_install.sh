@@ -29,6 +29,9 @@ yum -y install spacewalk-setup-postgresql python-debian screen vnstat git
 echo "Patch files"
 ./patch_files.sh
 
+# fix a problem that cobbler can't login
+sed -i 's/redhat_management_permissive: 0/redhat_management_permissive: 1/g' /etc/cobbler/settings
+
 echo "Open firewall ports"
 firewall-cmd --add-service=http ; firewall-cmd --add-service=https; firewall-cmd --add-service=smtp; firewall-cmd --runtime-to-permanent; firewall-cmd --reload
 #firewall-cmd --permanent --list-all
