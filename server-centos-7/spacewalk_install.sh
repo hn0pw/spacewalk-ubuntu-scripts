@@ -50,7 +50,8 @@ HOSTNAME=$(hostname -f)
 wget http://$HOSTNAME/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
 DEBIANSYNCFILE="/root/spacewalk-debian-sync.pl"
-wget https://raw.githubusercontent.com/stevemeier/spacewalk-debian-sync/master/spacewalk-debian-sync.pl -O $DEBIANSYNCFILE
+#wget https://raw.githubusercontent.com/stevemeier/spacewalk-debian-sync/master/spacewalk-debian-sync.pl -O $DEBIANSYNCFILE
+wget https://raw.githubusercontent.com/ramon-ga/spacewalk-ubuntu-scripts/master/server-centos-7/spacewalk-debian-sync.pl -O $DEBIANSYNCFILE
 chmod +x $DEBIANSYNCFILE
 
 echo "Please enter a user account to import packages with cron:"
