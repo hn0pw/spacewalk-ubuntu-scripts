@@ -23,17 +23,25 @@ EOF
 
 echo "Installing packages"
 #yum -y install spacewalk-postgresql
-yum -y install spacewalk-setup-postgresql python-debian screen vnstat git
+yum -y install spacewalk-setup-postgresql python-debian screen vnstat git net-snmp net-snmp-utils spacewalk-utils
 #yum update python-debian
 
+HOSTNAME=$(hostname -f)
 echo "Patch files"
 ./patch_files.sh
 
 # fix a problem that cobbler can't login
 sed -i 's/redhat_management_permissive: 0/redhat_management_permissive: 1/g' /etc/cobbler/settings
 
+# Fix package updates not showed up in spacewalk host
+# https://www.redhat.com/archives/spacewalk-list/2015-May/msg00146.html
+# Maybe reconf is needed spacewalk-hostname-rename <ip-address>
+sed -i "s*serverURL=https://enter.your.server.url.here/XMLRPC*serverURL=https://"$HOSTNAME"/XMLRPC*g" /etc/sysconfig/rhn/up2date
+
+
 echo "Open firewall ports"
-firewall-cmd --add-service=http ; firewall-cmd --add-service=https; firewall-cmd --add-service=smtp; firewall-cmd --runtime-to-permanent; firewall-cmd --reload
+
+firewall-cmd --add-service=http ; firewall-cmd --add-service=https; firewall-cmd --add-service=smtp; firewall-cmd --zone=public --add-port=161/udp; firewall-cmd --runtime-to-permanent; firewall-cmd --reload;
 #firewall-cmd --permanent --list-all
 
 echo "Spacewalk setup"
@@ -46,7 +54,6 @@ cpan -i Module/Build.pm
 cpan -i HTML::TreeBuilder
 cpan -i WWW/Mechanize.pm
 
-HOSTNAME=$(hostname -f)
 wget http://$HOSTNAME/pub/RHN-ORG-TRUSTED-SSL-CERT -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT
 
 DEBIANSYNCFILE="/root/spacewalk-debian-sync.pl"
@@ -71,7 +78,7 @@ echo "Restart spacewalk"
 spacewalk-service restart
 
 echo "************************************************************************************"
-echo "Finished, please open https://"$(hostname -f)" in your browser"
+echo "Finished, please open https://"$HOSTNAME" in your browser"
 echo ""
 echo "Please add the following channels in the web interface"
 echo "   Name                     | Parent     | Checksum      | Architecture"
